@@ -25,7 +25,7 @@ async def see_users(db: Session = Depends(get_db)):
 async def create_user(user: UserSchema,
                       db: Session = Depends(get_db)):
     user_model = User()
-    user_model.name = user.name
+    user_model.username = user.username
     user_model.password = user.password
     user_model = user.email
 
@@ -66,10 +66,10 @@ async def edit_user(Userid: int,
 
 
 @app.put("/update/comment")
-async def edit_user(userid: int,
+async def edit_comment(commentid: int,
                     schema: CommentSchema,
                     db: Session = Depends(get_db)):
-    model = db.query(Comment).filter(Comment.id == userid).first()
+    model = db.query(Comment).filter(Comment.id == commentid).first()
 
     if model is None:
         return "Is none"
@@ -95,7 +95,7 @@ async def del_user(user_id: int,
 
 
 @app.delete("/delete-comment")
-async def del_user(comment_id: int,
+async def del_comment(comment_id: int,
                    db: Session = Depends(get_db)):
     query = db.query(Comment).filter(Comment.id == comment_id).first()
     if query is None:
